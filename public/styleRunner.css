@@ -1,0 +1,151 @@
+body {
+	font-family: 'Open Sans', 'sans-serif';
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: var(--black);
+}
+.scoreText{
+	color:yellow;
+}
+
+.container {
+	background: url(forest1.gif) center no-repeat;
+	position: relative;
+}
+.container::before{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,255,.4);
+}
+.game{
+	width: 500px;
+	height: 200px;
+	border-bottom: 3px solid #fff;
+	margin: auto;
+}
+.hero{
+	width: 20px;
+	height: 50px;
+	position: relative;
+	top: 150px;
+	left: 80px;
+	z-index: 1;
+}
+.hero img{
+	width: 50px;
+	height: 50px;
+}
+.tomb{
+	width: 20px;
+	height: 50px;
+	position: relative;
+	top: 3px;
+	left: 80px;
+	z-index: 1;
+}
+.tomb img{
+	width: 50px;
+	height: 50px;
+}
+.animate {
+	animation: jump 0.3s linear;
+}
+
+@keyframe jump {
+	0% {
+		top: 150px;		
+	}
+	30% {
+		top: 100px;		
+	}
+	50% {
+		top: 60px;		
+	}
+	70% {
+		top: 100px;		
+	}
+	100% {
+		top: 150px;		
+	}
+}
+.vilan{
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: 115px;
+	left: 450px;
+	animation: move 1s infinite linear;
+	z-index: 1;
+	transform: scaleX(-1);
+}
+.pursuer {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: 80px;
+	left: 1px;
+	z-index: 1;
+	//transform: scaleX(-1);
+}
+.pursuer img{
+	width: 50px;
+	height: 50px;
+}
+.heart {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: -120px;
+	left: 10px;
+	z-index: 1;
+	//transform: scaleX(-1);
+}
+.heart img{
+	width: 40px;
+	height: 40px;
+}
+.heart0 {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: -140px;
+	left: 60px;
+	z-index: 1;
+	//transform: scaleX(-1);
+}
+.heart0 img{
+	width: 40px;
+	height: 40px;
+}
+.heart1 {
+	width: 20px;
+	height: 20px;
+	position: relative;
+	top: -160px;
+	left: 110px;
+	z-index: 1;
+	//transform: scaleX(-1);
+}
+.heart1 img{
+	width: 40px;
+	height: 40px;
+}
+
+
+@keyframe move {
+	0% {
+		left: 480px;
+	}
+	100%{
+		left: -20px;
+	}
+}
+.vilan img{
+	width: 50px;
+}
