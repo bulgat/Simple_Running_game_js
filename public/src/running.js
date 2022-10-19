@@ -8,6 +8,7 @@ const heart1 = document.querySelector(".heart1");
 const tomb = document.querySelector(".tomb");
 const scoreText = document.querySelector(".scoreText");
 const timeText = document.querySelector(".timeText");
+const container = document.querySelector(".container");
 
 let _vilanPosition = {x:450,testJump:false};
 let _deadHero = false;
@@ -30,8 +31,12 @@ function jump() {
 	setTimeout(function() {
 		hero.style.top = '150px';
 		heroJump = false;
-		console.log("JUMP "+_vilanPosition.x+"  testJump = "+_vilanPosition.testJump)
+		console.log("JUM t Jump = "+container)
+		//container.style.backgroundImage = "url('public/fortestJungle.gif')";
+		//container.style.backgroundImage.background-size = "100%";
 	}, 500);
+
+
 }
 
 
@@ -61,14 +66,16 @@ let isAlive =setInterval(function() {
 		_score++;
 	}
 	if(_vilanPosition.testJump === false){
-		//if(_vilanPosition==100)
-		if(_vilanPosition.x>110 &&  _vilanPosition.x < 120)
-		//if(_heroBoyPosition===_vilanPosition+60)
+		//if(_vilanPosition.x>110 &&  _vilanPosition.x < 120)
+		if(_vilanPosition.x>_heroBoyPosition+10 &&  _vilanPosition.x < _heroBoyPosition+20)
 		{
 			_vilanPosition.testJump = true;
 			console.log(_heroBoyPosition+"    "+_vilanPosition.x+"    heroJump = "+heroJump+" "+(_vilanPosition.x+40))
 			if (heroJump==false) {
 				//damage  hero
+				//reset hero
+				_heroBoyPosition = 100;
+
 				if (countLife==3){
 					heart.style.visibility = 'hidden';
 					countLife--;
@@ -104,7 +111,7 @@ let isAlive =setInterval(function() {
 		}
 	} else {
 		// hero life
-		//_heroBoyPosition+=0.1;
+		_heroBoyPosition+=0.05;
 		hero.style.left = _heroBoyPosition+'px';
 	}
 	scoreText.textContent ="      Score:"+_score;
