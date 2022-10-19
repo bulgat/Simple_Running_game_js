@@ -9,6 +9,9 @@ body {
 .scoreText{
 	color:yellow;
 }
+.timeText{
+	color:rgb(16, 233, 70);
+}
 
 .container {
 	background: url(forest1.gif) center no-repeat;
