@@ -19,19 +19,21 @@ let _score = 0;
 let _time=0;
 
 let heroJump = false;
+let _heroJumpTime = 0;
 let countLife = 3;
 
 tomb.style.visibility = 'hidden';
 
 
 function jump() {
-	hero.style.top = '10px';
+	//hero.style.top = '10px';
 	heroJump = true;
-
+	_heroJumpTime = _time;
 	setTimeout(function() {
 		hero.style.top = '150px';
 		heroJump = false;
-		console.log("JUM t Jump = "+container)
+		
+		console.log(_heroJumpTime+"  JUM t Jump = "+container)
 		//container.style.backgroundImage = "url('public/fortestJungle.gif')";
 		//container.style.backgroundImage.background-size = "100%";
 	}, 500);
@@ -66,11 +68,10 @@ let isAlive =setInterval(function() {
 		_score++;
 	}
 	if(_vilanPosition.testJump === false){
-		//if(_vilanPosition.x>110 &&  _vilanPosition.x < 120)
 		if(_vilanPosition.x>_heroBoyPosition+10 &&  _vilanPosition.x < _heroBoyPosition+20)
 		{
 			_vilanPosition.testJump = true;
-			console.log(_heroBoyPosition+"    "+_vilanPosition.x+"    heroJump = "+heroJump+" "+(_vilanPosition.x+40))
+			
 			if (heroJump==false) {
 				//damage  hero
 				//reset hero
@@ -114,6 +115,27 @@ let isAlive =setInterval(function() {
 		_heroBoyPosition+=0.05;
 		hero.style.left = _heroBoyPosition+'px';
 	}
+	//jump grafic
+	if (heroJump===true){
+		let coefJumpUp = 20;
+		if(_time<_heroJumpTime+coefJumpUp){
+			let jumpHeight = _time-_heroJumpTime;
+			hero.style.top = (150-jumpHeight*7)+'px';
+			
+			//console.log( (150-jumpHeight*7)+" ## heroJump = "+jumpHeight)
+		} 
+		
+		if(_time>=_heroJumpTime+coefJumpUp){
+			//hero.style.top = '10px';
+			let jumpHeight = _time-_heroJumpTime-coefJumpUp;
+			//hero.style.top = '10px';
+			hero.style.top = (10+jumpHeight*5)+'px';
+			//console.log((10+jumpHeight*5)+  " = Jump = "+jumpHeight+" 000000000"+_heroJumpTime)
+		}
+		
+	}
+
+
 	scoreText.textContent ="      Score:"+_score;
 	timeText.textContent ="      Time:"+_time;
 	_time++;
