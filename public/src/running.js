@@ -4,10 +4,12 @@ const elements = {
 	heroBoy: document.querySelector(".heroBoy"),
 	ghost: document.querySelector(".vilan"),
 	pursuer: document.querySelector(".pursuer"),
-	heart0: document.querySelector(".heart0"),
-	heart1: document.querySelector(".heart1"),
-	heart2: document.querySelector(".heart2"),
-	heart3: document.querySelector(".heart3"),
+	heartList: [
+		document.querySelector(".heart0"),
+		document.querySelector(".heart1"),
+		document.querySelector(".heart2"),
+		document.querySelector(".heart3")
+	],
 	tomb: document.querySelector(".tomb"),
 	scoreText: document.querySelector(".scoreText"),
 	timeText: document.querySelector(".timeText"),
@@ -23,6 +25,10 @@ const GAME_CONSTANTS = {
 	_time:0,
 	_heroJump: false,
 	_heroJumpTime: 0,
+	IMAGES_FON: {
+		FOREST: "url('public/forest1.gif')",
+		FOREST_DEAD: "url('public/forestDead.gif')"
+	}
 }
 
 elements.tomb.style.visibility = 'hidden';
@@ -38,17 +44,17 @@ function jump() {
 	}, 500);
 	//ressurection
 	if (GAME_CONSTANTS._deadHero.dead===true) {
-		elements.container.style.backgroundImage = "url('public/forest1.gif')";
+		elements.container.style.backgroundImage = GAME_CONSTANTS.IMAGES_FON.FOREST;
 		elements.ghost.style.visibility = "visible";
 		elements.pursuer.style.visibility = "visible";
 		GAME_CONSTANTS._moveRight =0;
 		elements.pursuer.style.left =GAME_CONSTANTS._moveRight +'px';
 		elements.tomb.style.visibility = "hidden";
 		elements.hero.style.visibility = 'visible';
-		elements.heart0.style.visibility = 'visible';
-		elements.heart1.style.visibility = 'visible';
-		elements.heart2.style.visibility = 'visible';
-		elements.heart3.style.visibility = 'visible';
+
+		for (let item of elements.heartList) {
+			item.style.visibility = 'visible';
+		}
 
 		GAME_CONSTANTS._deadHero.dead=false;
 		GAME_CONSTANTS._deadHero.countLife =3;
@@ -62,8 +68,7 @@ document.addEventListener("keydown",function(event) {
 		stopGame();
 	}
 	jump();
-	console.log('01 s ', event)
-	
+
 });
 document.addEventListener("mousedown",function(event) {
 	jump();
@@ -98,13 +103,7 @@ let isAlive =setInterval(function() {
 				GAME_CONSTANTS._heroBoyPosition = 100;
 
 				DamageController();
-				/*
-				if (GAME_CONSTANTS._deadHero.countLife==0){
-					if (GAME_CONSTANTS._deadHero.dead===false) {
-						deadHero();
-					}
-				}
-				*/
+
 			}
 
 		}
@@ -146,7 +145,7 @@ let isAlive =setInterval(function() {
 	if (GAME_CONSTANTS._deadHero.dead===true) {
 		if (GAME_CONSTANTS._deadHero.time + 500 <GAME_CONSTANTS._time)
 		{
-			elements.container.style.backgroundImage = "url('public/forestDead.gif')";
+			elements.container.style.backgroundImage = GAME_CONSTANTS.IMAGES_FON.FOREST_DEAD;
 			elements.ghost.style.visibility = "hidden";
 			elements.pursuer.style.visibility = "hidden";
 			elements.tomb.style.visibility = "hidden";
@@ -175,16 +174,16 @@ function DamageController() {
 
 	switch (GAME_CONSTANTS._deadHero.countLife) {
 		case 4:
-			elements.heart0.style.visibility = 'hidden';
+			elements.heartList[3].style.visibility = 'hidden';
 			break;
 		case 3:
-			elements.heart1.style.visibility = 'hidden';
+			elements.heartList[2].style.visibility = 'hidden';
 			break;
 		case 2:
-			elements.heart2.style.visibility = 'hidden';
+			elements.heartList[1].style.visibility = 'hidden';
 			break;
 		case 1:
-			elements.heart3.style.visibility = 'hidden';
+			elements.heartList[0].style.visibility = 'hidden';
 			break;
 		case 0:
 			if (GAME_CONSTANTS._deadHero.dead === false) {
