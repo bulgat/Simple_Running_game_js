@@ -13,37 +13,35 @@ const elements = {
 	container: document.querySelector(".container")
 };
 
-
-let _ghostPosition = {x:450,testJump:false};
-let _deadHero = {dead:false,time:0,countLife:3,score:0};
-
-let _moveLeft = 80;
-let _heroBoyPosition = 100;
-let _moveRight = 0;
-let _time=0;
-
-let heroJump = false;
-let _heroJumpTime = 0;
+const GAME_CONSTANTS = {
+	_ghostPosition : { x: 450, testJump: false },
+	_deadHero: { dead: false, time: 0, countLife: 3, score: 0 },
+	_moveLeft: 80,
+	_heroBoyPosition: 100,
+	_moveRight: 0,
+	_time:0,
+	_heroJump: false,
+	_heroJumpTime: 0,
+}
 
 elements.tomb.style.visibility = 'hidden';
 
 
 function jump() {
-	heroJump = true;
-	_heroJumpTime = _time;
+	GAME_CONSTANTS._heroJump = true;
+	GAME_CONSTANTS._heroJumpTime = GAME_CONSTANTS._time;
 	setTimeout(function() {
 		elements.hero.style.top = '150px';
-		heroJump = false;
-		
-		console.log(_heroJumpTime+"  JUM t Jump = "+container)
+		GAME_CONSTANTS._heroJump = false;
+
 	}, 500);
 	//ressurection
-	if (_deadHero.dead===true) {
+	if (GAME_CONSTANTS._deadHero.dead===true) {
 		elements.container.style.backgroundImage = "url('public/forest1.gif')";
 		elements.ghost.style.visibility = "visible";
 		elements.pursuer.style.visibility = "visible";
-		_moveRight =0;
-		elements.pursuer.style.left =_moveRight +'px';
+		GAME_CONSTANTS._moveRight =0;
+		elements.pursuer.style.left =GAME_CONSTANTS._moveRight +'px';
 		elements.tomb.style.visibility = "hidden";
 		elements.hero.style.visibility = 'visible';
 		elements.heart.style.visibility = 'visible';
@@ -51,15 +49,20 @@ function jump() {
 		elements.heart1.style.visibility = 'visible';
 
 
-		_deadHero.dead=false;
-		_deadHero.countLife =3;
-		_deadHero.score =0;
+		GAME_CONSTANTS._deadHero.dead=false;
+		GAME_CONSTANTS._deadHero.countLife =3;
+		GAME_CONSTANTS._deadHero.score =0;
 	}
 }
 
 
 document.addEventListener("keydown",function(event) {
+	if (event.key.toLowerCase() == 'p') {
+		stopGame();
+	}
 	jump();
+	console.log('01 s ', event)
+	
 });
 document.addEventListener("mousedown",function(event) {
 	jump();
@@ -74,42 +77,42 @@ let isAlive =setInterval(function() {
 		
 	}
 
-	_ghostPosition.x-=1;
+	GAME_CONSTANTS._ghostPosition.x-=1;
 
-	elements.ghost.style.left = _ghostPosition.x +'px';
+	elements.ghost.style.left = GAME_CONSTANTS._ghostPosition.x +'px';
 
-	if(_ghostPosition.x<0){
-		_ghostPosition.x = 450;
-		_ghostPosition.testJump = false;
-		_deadHero.score++;
+	if (GAME_CONSTANTS._ghostPosition.x<0){
+		GAME_CONSTANTS._ghostPosition.x = 450;
+		GAME_CONSTANTS._ghostPosition.testJump = false;
+		GAME_CONSTANTS._deadHero.score++;
 	}
-	if(_ghostPosition.testJump === false){
-		if(_ghostPosition.x>_heroBoyPosition+10 &&  _ghostPosition.x < _heroBoyPosition+20)
+	if (GAME_CONSTANTS._ghostPosition.testJump === false){
+		if (GAME_CONSTANTS._ghostPosition.x > GAME_CONSTANTS._heroBoyPosition + 10 && GAME_CONSTANTS._ghostPosition.x < GAME_CONSTANTS._heroBoyPosition+20)
 		{
-			_ghostPosition.testJump = true;
+			GAME_CONSTANTS._ghostPosition.testJump = true;
 			
-			if (heroJump==false) {
+			if (GAME_CONSTANTS._heroJump==false) {
 				//damage  hero
 				//reset hero
-				_heroBoyPosition = 100;
+				GAME_CONSTANTS._heroBoyPosition = 100;
 
-				if (_deadHero.countLife==3){
+				if (GAME_CONSTANTS._deadHero.countLife==3){
 					elements.heart.style.visibility = 'hidden';
-					_deadHero.countLife--;
+					GAME_CONSTANTS._deadHero.countLife--;
 					return;
 				}
-				if (_deadHero.countLife==2){
+				if (GAME_CONSTANTS._deadHero.countLife==2){
 					elements.heart0.style.visibility = 'hidden';
-					_deadHero.countLife--;
+					GAME_CONSTANTS._deadHero.countLife--;
 					return;
 				}
-				if (_deadHero.countLife==1){
+				if (GAME_CONSTANTS._deadHero.countLife==1){
 					elements.heart1.style.visibility = 'hidden';
-					_deadHero.countLife--;
+					GAME_CONSTANTS._deadHero.countLife--;
 					return;
 				}
-				if (_deadHero.countLife==0){
-					if (_deadHero.dead===false) {
+				if (GAME_CONSTANTS._deadHero.countLife==0){
+					if (GAME_CONSTANTS._deadHero.dead===false) {
 						deadHero();
 					}
 				}
@@ -117,43 +120,42 @@ let isAlive =setInterval(function() {
 
 		}
 	}
-	if (_deadHero.dead===true) {
-		if(_moveLeft>=0){
-			elements.hero.style.left = _moveLeft+'px';
-			elements.tomb.style.left = _moveLeft+'px';
-			_moveLeft--;
+	if (GAME_CONSTANTS._deadHero.dead===true) {
+		if (GAME_CONSTANTS._moveLeft>=0){
+			elements.hero.style.left = GAME_CONSTANTS._moveLeft+'px';
+			elements.tomb.style.left = GAME_CONSTANTS._moveLeft+'px';
+			GAME_CONSTANTS._moveLeft--;
 		}
-		if(_moveRight<=450)
+		if (GAME_CONSTANTS._moveRight<=450)
 		{
-			elements.pursuer.style.left =_moveRight +'px';
-			_moveRight++;
+			elements.pursuer.style.left =GAME_CONSTANTS._moveRight +'px';
+			GAME_CONSTANTS._moveRight++;
 		}
 	} else {
 		// hero life
-		_heroBoyPosition+=0.05;
-		elements.hero.style.left = _heroBoyPosition+'px';
+		GAME_CONSTANTS._heroBoyPosition+=0.05;
+		elements.hero.style.left = GAME_CONSTANTS._heroBoyPosition+'px';
 	}
 	//jump grafic
-	if (heroJump===true){
+	if (GAME_CONSTANTS._heroJump===true){
 		let coefJumpUp = 20;
-		if(_time<_heroJumpTime+coefJumpUp){
-			let jumpHeight = _time-_heroJumpTime;
+		if (GAME_CONSTANTS._time <GAME_CONSTANTS._heroJumpTime+coefJumpUp){
+			let jumpHeight = GAME_CONSTANTS._time -GAME_CONSTANTS._heroJumpTime;
 			elements.hero.style.top = (150-jumpHeight*7)+'px';
 			
 			
 			
 		} 
 		
-		if(_time>=_heroJumpTime+coefJumpUp){
-			let jumpHeight = _time-_heroJumpTime-coefJumpUp;
+		if (GAME_CONSTANTS._time >=GAME_CONSTANTS._heroJumpTime+coefJumpUp){
+			let jumpHeight = GAME_CONSTANTS._time -GAME_CONSTANTS._heroJumpTime-coefJumpUp;
 			elements.hero.style.top = (10+jumpHeight*5)+'px';
 		}
 		
 	}
    //dead заставка
-   if (_deadHero.dead===true) {
-		console.log((_deadHero.time+500)+  " # um  = "+_deadHero.time +"   t = "+_time);
-		if(_deadHero.time+500<_time)
+	if (GAME_CONSTANTS._deadHero.dead===true) {
+		if (GAME_CONSTANTS._deadHero.time + 500 <GAME_CONSTANTS._time)
 		{
 			elements.container.style.backgroundImage = "url('public/forestDead.gif')";
 			elements.ghost.style.visibility = "hidden";
@@ -161,16 +163,21 @@ let isAlive =setInterval(function() {
 			elements.tomb.style.visibility = "hidden";
 		}
    } else {
-		elements.scoreText.textContent ="      Score:"+_deadHero.score;
+		elements.scoreText.textContent = "      Score:" +GAME_CONSTANTS._deadHero.score;
    }
 	
-	elements.timeText.textContent ="      Time:"+_time;
-	_time++;
+	elements.timeText.textContent = "      Time:" +GAME_CONSTANTS._time;
+	GAME_CONSTANTS._time++;
 	
 },10);
 function deadHero() {
 	elements.tomb.style.visibility = 'visible';
 	elements.hero.style.visibility = 'hidden';
-	_deadHero.dead = true;
-	_deadHero.time = _time;
+	GAME_CONSTANTS._deadHero.dead = true;
+	GAME_CONSTANTS._deadHero.time = GAME_CONSTANTS._time;
+}
+
+// Функция для остановки игры (опционально)
+function stopGame() {
+	clearInterval(isAlive);
 }
