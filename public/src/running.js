@@ -74,7 +74,7 @@ document.addEventListener("mousedown",function(event) {
 	jump();
 });
 
-let isAlive =setInterval(function() {
+let gameUpdate =setInterval(function() {
 	let heroTop = parseInt(window.getComputedStyle(elements.hero).getPropertyValue("top"));
 	let ghostLeft = parseInt(window.getComputedStyle(elements.ghost).getPropertyValue("top"));
 
@@ -108,6 +108,8 @@ let isAlive =setInterval(function() {
 
 		}
 	}
+	heroMovementController();
+
 	if (GAME_CONSTANTS._deadHero.dead===true) {
 		if (GAME_CONSTANTS._moveLeft>=0){
 			elements.hero.style.left = GAME_CONSTANTS._moveLeft+'px';
@@ -119,20 +121,14 @@ let isAlive =setInterval(function() {
 			elements.pursuer.style.left =GAME_CONSTANTS._moveRight +'px';
 			GAME_CONSTANTS._moveRight++;
 		}
-	} else {
-		// hero life
-		GAME_CONSTANTS._heroBoyPosition+=0.05;
-		elements.hero.style.left = GAME_CONSTANTS._heroBoyPosition+'px';
-	}
+	} 
 	//jump grafic
 	if (GAME_CONSTANTS._heroJump===true){
 		let coefJumpUp = 20;
 		if (GAME_CONSTANTS._time <GAME_CONSTANTS._heroJumpTime+coefJumpUp){
 			let jumpHeight = GAME_CONSTANTS._time -GAME_CONSTANTS._heroJumpTime;
 			elements.hero.style.top = (150-jumpHeight*7)+'px';
-			
-			
-			
+
 		} 
 		
 		if (GAME_CONSTANTS._time >=GAME_CONSTANTS._heroJumpTime+coefJumpUp){
@@ -142,22 +138,26 @@ let isAlive =setInterval(function() {
 		
 	}
    //dead заставка
-	if (GAME_CONSTANTS._deadHero.dead===true) {
-		if (GAME_CONSTANTS._deadHero.time + 500 <GAME_CONSTANTS._time)
-		{
-			elements.container.style.backgroundImage = GAME_CONSTANTS.IMAGES_FON.FOREST_DEAD;
-			elements.ghost.style.visibility = "hidden";
-			elements.pursuer.style.visibility = "hidden";
-			elements.tomb.style.visibility = "hidden";
-		}
-   } else {
-		elements.scoreText.textContent = "      Score:" +GAME_CONSTANTS._deadHero.score;
-   }
-	
-	elements.timeText.textContent = "      Time:" +GAME_CONSTANTS._time;
+	if (GAME_CONSTANTS._deadHero.dead === true) {
+		updateDeathScreen();
+
+   } 
+	UIController();
+
 	GAME_CONSTANTS._time++;
 	
-},10);
+}, 10);
+
+
+function updateDeathScreen() {
+	if (GAME_CONSTANTS._deadHero.time + 500 < GAME_CONSTANTS._time) {
+		elements.container.style.backgroundImage = GAME_CONSTANTS.IMAGES_FON.FOREST_DEAD;
+		elements.ghost.style.visibility = "hidden";
+		elements.pursuer.style.visibility = "hidden";
+		elements.tomb.style.visibility = "hidden";
+	}
+}
+
 function deadHero() {
 	elements.tomb.style.visibility = 'visible';
 	elements.hero.style.visibility = 'hidden';
@@ -167,7 +167,7 @@ function deadHero() {
 
 // Функция для остановки игры (опционально)
 function stopGame() {
-	clearInterval(isAlive);
+	clearInterval(gameUpdate);
 }
 
 function DamageController() {
@@ -195,5 +195,22 @@ function DamageController() {
 	}
 
 	GAME_CONSTANTS._deadHero.countLife--;
+
+}
+
+function heroMovementController() {
+
+	if (GAME_CONSTANTS._deadHero.dead == true) {
+		return;
+	}
+
+	GAME_CONSTANTS._heroBoyPosition += 0.05;
+	elements.hero.style.left = GAME_CONSTANTS._heroBoyPosition + 'px';
+}
+
+function UIController() {
+
+	elements.scoreText.textContent = `Score: ${GAME_CONSTANTS._deadHero.score}`;
+	elements.timeText.textContent = `Time: ${GAME_CONSTANTS._time}`;
 
 }
