@@ -4,9 +4,10 @@ const elements = {
 	heroBoy: document.querySelector(".heroBoy"),
 	ghost: document.querySelector(".vilan"),
 	pursuer: document.querySelector(".pursuer"),
-	heart: document.querySelector(".heart"),
 	heart0: document.querySelector(".heart0"),
 	heart1: document.querySelector(".heart1"),
+	heart2: document.querySelector(".heart2"),
+	heart3: document.querySelector(".heart3"),
 	tomb: document.querySelector(".tomb"),
 	scoreText: document.querySelector(".scoreText"),
 	timeText: document.querySelector(".timeText"),
@@ -15,7 +16,7 @@ const elements = {
 
 const GAME_CONSTANTS = {
 	_ghostPosition : { x: 450, testJump: false },
-	_deadHero: { dead: false, time: 0, countLife: 3, score: 0 },
+	_deadHero: { dead: false, time: 0, countLife: 4, score: 0 },
 	_moveLeft: 80,
 	_heroBoyPosition: 100,
 	_moveRight: 0,
@@ -44,10 +45,10 @@ function jump() {
 		elements.pursuer.style.left =GAME_CONSTANTS._moveRight +'px';
 		elements.tomb.style.visibility = "hidden";
 		elements.hero.style.visibility = 'visible';
-		elements.heart.style.visibility = 'visible';
 		elements.heart0.style.visibility = 'visible';
 		elements.heart1.style.visibility = 'visible';
-
+		elements.heart2.style.visibility = 'visible';
+		elements.heart3.style.visibility = 'visible';
 
 		GAME_CONSTANTS._deadHero.dead=false;
 		GAME_CONSTANTS._deadHero.countLife =3;
@@ -96,26 +97,14 @@ let isAlive =setInterval(function() {
 				//reset hero
 				GAME_CONSTANTS._heroBoyPosition = 100;
 
-				if (GAME_CONSTANTS._deadHero.countLife==3){
-					elements.heart.style.visibility = 'hidden';
-					GAME_CONSTANTS._deadHero.countLife--;
-					return;
-				}
-				if (GAME_CONSTANTS._deadHero.countLife==2){
-					elements.heart0.style.visibility = 'hidden';
-					GAME_CONSTANTS._deadHero.countLife--;
-					return;
-				}
-				if (GAME_CONSTANTS._deadHero.countLife==1){
-					elements.heart1.style.visibility = 'hidden';
-					GAME_CONSTANTS._deadHero.countLife--;
-					return;
-				}
+				DamageController();
+				/*
 				if (GAME_CONSTANTS._deadHero.countLife==0){
 					if (GAME_CONSTANTS._deadHero.dead===false) {
 						deadHero();
 					}
 				}
+				*/
 			}
 
 		}
@@ -180,4 +169,32 @@ function deadHero() {
 // Функция для остановки игры (опционально)
 function stopGame() {
 	clearInterval(isAlive);
+}
+
+function DamageController() {
+
+	switch (GAME_CONSTANTS._deadHero.countLife) {
+		case 4:
+			elements.heart0.style.visibility = 'hidden';
+			break;
+		case 3:
+			elements.heart1.style.visibility = 'hidden';
+			break;
+		case 2:
+			elements.heart2.style.visibility = 'hidden';
+			break;
+		case 1:
+			elements.heart3.style.visibility = 'hidden';
+			break;
+		case 0:
+			if (GAME_CONSTANTS._deadHero.dead === false) {
+				deadHero();
+			}
+			break;
+		default:
+			return;
+	}
+
+	GAME_CONSTANTS._deadHero.countLife--;
+
 }

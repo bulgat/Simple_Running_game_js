@@ -48,7 +48,7 @@ body {
 	width: 20px;
 	height: 50px;
 	position: relative;
-	top: 3px;
+	top: 120px;
 	left: 80px;
 	z-index: 1;
 }
@@ -100,46 +100,68 @@ body {
 	width: 50px;
 	height: 50px;
 }
-.heart {
-	width: 20px;
-	height: 20px;
-	position: relative;
-	top: -120px;
-	left: 10px;
-	z-index: 1;
-	//transform: scaleX(-1);
+
+.line-heart{
+	display:flex;
+	margin-top:-80px;
+	.heart0 {
+		width: 20px;
+		height: 20px;
+		//position: relative;
+		top: -120px;
+		left: 10px;
+		z-index: 1;
+	}
+	.heart1 {
+		width: 20px;
+		height: 20px;
+		//position: relative;
+		top: -140px;
+		left: 60px;
+		z-index: 1;
+	}
+	.heart2 {
+		width: 20px;
+		height: 20px;
+		//position: relative;
+		top: -160px;
+		left: 110px;
+		z-index: 1;
+	}
+	.heart3 {
+		width: 20px;
+		height: 20px;
+		//position: relative;
+		top: -160px;
+		left: 110px;
+		z-index: 1;
+	}
 }
-.heart img{
-	width: 40px;
-	height: 40px;
-}
-.heart0 {
-	width: 20px;
-	height: 20px;
-	position: relative;
-	top: -140px;
-	left: 60px;
-	z-index: 1;
-	//transform: scaleX(-1);
-}
+
+
 .heart0 img{
 	width: 40px;
 	height: 40px;
 }
-.heart1 {
-	width: 20px;
-	height: 20px;
-	position: relative;
-	top: -160px;
-	left: 110px;
-	z-index: 1;
-	//transform: scaleX(-1);
-}
+
 .heart1 img{
 	width: 40px;
 	height: 40px;
 }
 
+.heart2 img{
+	width: 40px;
+	height: 40px;
+}
+
+.heart3 img {
+	width: 40px;
+	height: 40px;
+}
+.help-space{
+	color:azure;
+
+}
 
 @keyframe move {
 	0% {
